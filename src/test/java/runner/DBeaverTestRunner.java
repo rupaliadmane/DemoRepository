@@ -21,6 +21,12 @@ import java.net.URI;
         strict = true
 )
 public class DBeaverTestRunner {
+    @BeforeClass
+    public static void initLeanFTSDK() throws Exception {
+        ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
+        config.setServerAddress(new URI("ws://localhost:5095"));
+        SDK.init(config);
+    }
 
 }
 
