@@ -26,3 +26,11 @@ Feature: Add connection feature in DBeaver
       |Username| testUser|
       |Password| testpassword|
     Then Verify the database connection "newdb2" is created on Database Navigator
+
+    
+    Scenario: [3] Delete database and verify deleted successfully
+      When User selects "newdb2" database on database navigator
+      And User hits delete button
+      Then Verify the confirmation dialog appears
+      When User clicks on Yes on Delete object dialogue box
+      Then Verify the database connection "newdb2" is not present on Database Navigator

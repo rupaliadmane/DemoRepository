@@ -55,4 +55,29 @@ public class DBeaverFeatureStepDefinition {
     public void userClicksOnNewDatabaseConnectionFromToolbar() throws GeneralLeanFtException {
         dBeaver.newDatabaseConnectionButton().press();
     }
+
+    @When("User selects {string} database on database navigator")
+    public void user_selects_database_on_database_navigator(String dbName) throws GeneralLeanFtException {
+            dBeaver.getDatabaseNodeOnNavigator(dbName);
+    }
+
+    @When("User hits delete button")
+    public void user_hits_delete_button() throws GeneralLeanFtException {
+            Keyboard.pressKey(Keyboard.Keys.DELETE);
+    }
+
+    @Then("Verify the confirmation dialog appears")
+    public void verify_the_confirmation_dialogue_appears() throws GeneralLeanFtException {
+        Assert.assertTrue(dBeaver.deleteConfirmationDialog().exists());
+    }
+
+    @When("User clicks on Yes on Delete object dialogue box")
+    public void user_clicks_on_Yes_on_Delete_object_dialogue_box() throws GeneralLeanFtException {
+            dBeaver.clickButtonWithText("&Yes", dBeaver.deleteConfirmationDialog());
+    }
+
+    @Then("Verify the database connection {string} is not present on Database Navigator")
+    public void verify_the_database_connection_is_not_present_on_Database_Navigator(String dbName) throws GeneralLeanFtException {
+            Assert.assertFalse("Database connection '"+dbName+"' is present on database navigator",dBeaver.verifyDBConnectionExistsOnDatabaseNavigator(dbName));
+    }
 }

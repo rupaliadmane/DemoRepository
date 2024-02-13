@@ -10,8 +10,6 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
 
 public class DBeaver {
 
@@ -65,6 +63,24 @@ public class DBeaver {
         Keyboard.keyUp(Keyboard.Keys.CONTROL);
         Keyboard.keyUp(Keyboard.Keys.N);
     }
+
+    public void getDatabaseNodeOnNavigator(String dbName) throws GeneralLeanFtException {
+        databaseNavigator().select(dbName);
+    }
+
+    public Dialog deleteConfirmationDialog() throws GeneralLeanFtException {
+       return dbeaverWindow().describe(Dialog.class, new DialogDescription.Builder()
+                        .nativeClass("#32770")
+                        .text("Delete object")
+                        .ownedWindow(true)
+                        .childWindow(false).build());
+    }
+
+
+
+
+
+
 
     /*-------------------------------------------
         Common methods for DBeaver application
@@ -132,15 +148,12 @@ public class DBeaver {
 
     public boolean verifyDBConnectionExistsOnDatabaseNavigator(String dbName) throws GeneralLeanFtException {
            try{
-               TreeViewNode nodes = databaseNavigator().getNode(dbName);
+               getDatabaseNodeOnNavigator(dbName);
                return  true;
            }catch (Exception e){
                return false;
            }
-//            for (TreeViewNode node : nodes) {
-//                 if(dbName.equalsIgnoreCase(node.getText()))
-//                     return true;
-//            }
-//        return false;
     }
+
+
 }
