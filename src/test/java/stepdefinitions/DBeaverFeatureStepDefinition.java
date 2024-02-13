@@ -8,10 +8,7 @@ import org.junit.Assert;
 import pageobjects.DBeaver;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Map;
 
 public class DBeaverFeatureStepDefinition {
     DBeaver dBeaver = new DBeaver();
@@ -20,10 +17,12 @@ public class DBeaverFeatureStepDefinition {
         dBeaver.launch();
     }
 
-    @When("User selects create connection on Database Navigator")
-    public void user_selects_create_connection_on_Database_Navigator() throws GeneralLeanFtException {
-        dBeaver.newDatabaseConnectionButton().press();
-
+    @When("User selects create connection with keyboard button")
+    public void user_selects_create_connection_on_Database_Navigator() throws GeneralLeanFtException, CloneNotSupportedException {
+    //        dBeaver.databaseNavigator().click(MouseButton.RIGHT);
+        dBeaver.newWizard();
+        dBeaver.selectAWizard("DBeaver;Database Connection");
+        dBeaver.clickButtonWithText("&Next >",dBeaver.selectAWizard());
     }
 
     @When("User selects {string} database")
@@ -32,8 +31,8 @@ public class DBeaverFeatureStepDefinition {
         dBeaver.clickButtonWithText("&Next >", dBeaver.connectToADatabaseWindow());
     }
 
-    @When("User enters database details and clicks Enter")
-    public void user_enters_database_details_and_clicks_Enter(List<List<String>> dataTable) throws GeneralLeanFtException {
+    @When("User enters database details and clicks Finish")
+    public void user_enters_database_details_and_clicks_Finish(List<List<String>> dataTable) throws GeneralLeanFtException {
         for (List<String> entry: dataTable){
          dBeaver.enterConnectionDetails(entry.get(0),entry.get(1));
         }
@@ -50,5 +49,10 @@ public class DBeaverFeatureStepDefinition {
     @Then("Close Dbeaver application")
     public void close_dbeaver_application() throws GeneralLeanFtException {
         dBeaver.close();
+    }
+
+    @When("User clicks on new database connection from toolbar")
+    public void userClicksOnNewDatabaseConnectionFromToolbar() throws GeneralLeanFtException {
+        dBeaver.newDatabaseConnectionButton().press();
     }
 }

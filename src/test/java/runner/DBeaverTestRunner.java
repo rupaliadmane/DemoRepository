@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import pageobjects.DBeaver;
 
 import java.net.URI;
 
@@ -21,11 +22,18 @@ import java.net.URI;
         strict = true
 )
 public class DBeaverTestRunner {
+    private static DBeaver dBeaver = new DBeaver();
     @BeforeClass
-    public static void initLeanFTSDK() throws Exception {
-        ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
-        config.setServerAddress(new URI("ws://localhost:5095"));
-        SDK.init(config);
+    public static void setUp() throws Exception {
+//        ModifiableSDKConfiguration config = new ModifiableSDKConfiguration();
+//        config.setServerAddress(new URI("ws://localhost:5095"));
+//        SDK.init(config);
+
+        dBeaver.launch();
+    }
+    @AfterClass
+    public static void tearDown() throws Exception {
+        dBeaver.close();
     }
 
 }
